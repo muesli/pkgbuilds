@@ -1,0 +1,54 @@
+# Maintainer: Kuba Serafinowski <zizzfizzix(at)gmail(dot)com>
+# https://github.com/zizzfizzix/pkgbuilds
+# Contributor: Rick W. Chen <stuffcorpse@archlinux.us>
+
+##############################################################
+#### The section below can be adjusted to suit your needs ####
+##############################################################
+
+# What type of build do you want?
+# See http://techbase.kde.org/Development/CMake/Addons_for_KDE#Buildtypes to check what is supported.
+
+_buildtype='Release'
+
+##############################################################
+
+pkgname=libechonest-qt5
+pkgver=2.3.0
+pkgrel=2
+pkgdesc='C++ library for interfacing with Echo Nest'
+arch=('i686' 'x86_64')
+url='https://projects.kde.org/projects/playground/libs/libechonest'
+license=('GPL')
+depends=('qjson')
+makedepends=('cmake')
+#conflicts=('libechonest-git' 'libechonest2')
+#replaces=('libechonest2')
+source=("http://files.lfranchi.com/libechonest-${pkgver}.tar.bz2")
+md5sums=('9a740f7a8eb7d79ab013593bb52544b6')
+
+if [[ ! ${_buildtype} == 'Release' ]] && [[ ! ${_buildtype} == 'release' ]]; then
+  options=('debug')
+fi
+
+prepare() {
+  if [[ -e ${srcdir}/libechonest-${pkgver}-build ]]; then rm -rf ${srcdir}/libechonest-${pkgver}-build; fi
+  mkdir ${srcdir}/libechonest-${pkgver}-build
+}
+
+build() {
+  cd ${srcdir}/libechonest-${pkgver}-build
+
+  cmake -DQT_QMAKE_EXECUTABLE=qmake-qt5 \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_BUILD_TYPE=${_buildtype} \
+        -DECHONEST_BUILD_TESTS=off \
+        -DBUILD_WITH_QT4=off \
+        ../libechonest-${pkgver}
+  make
+}
+
+package() {
+  cd ${srcdir}/libechonest-${pkgver}-build
+  make DESTDIR=${pkgdir} install
+}
