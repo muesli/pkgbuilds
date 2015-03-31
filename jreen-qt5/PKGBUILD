@@ -12,17 +12,16 @@ _buildtype='Release'
 
 ##############################################################
 
-pkgname=jreen
+pkgname=jreen-qt5
 pkgver=1.2.0
 pkgrel=1
 pkgdesc='Free and Opensource Jabber library, written in C++ using cross-platform framework Qt.'
 arch=('i686' 'x86_64')
 url='http://qutim.org/jreen'
 license=('GPL2')
-depends=('gsasl' 'speex' 'qt4')
+depends=('gsasl' 'speex' 'qt5-base')
 makedepends=('cmake')
-provides=('jreen')
-conflicts=('jreen-git')
+conflicts=('jreen-qt5-git')
 source=("${pkgname}-${pkgver}.zip::http://github.com/euroelessar/${pkgname}/archive/v${pkgver}.zip")
 md5sums=('ec99ee35e63dfdd22d650edbdb2e6edb')
 
