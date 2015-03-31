@@ -1,5 +1,5 @@
-# Maintainer: Kuba Serafinowski <zizzfizzix(at)gmail(dot)com>
-# https://github.com/zizzfizzix/pkgbuilds
+# Maintainer: Christian Muehlhaeuser <muesli@gmail.com>
+# https://github.com/muesli/pkgbuilds
 
 ##############################################################
 #### The section below can be adjusted to suit your needs ####
@@ -22,7 +22,7 @@ license=('GPL2')
 depends=('gsasl' 'speex' 'qt5-base')
 makedepends=('cmake')
 conflicts=('jreen-qt5-git')
-source=("${pkgname}-${pkgver}.zip::http://github.com/euroelessar/${pkgname}/archive/v${pkgver}.zip")
+source=("jreen-${pkgver}.zip::http://github.com/euroelessar/jreen/archive/v${pkgver}.zip")
 md5sums=('ec99ee35e63dfdd22d650edbdb2e6edb')
 
 if [[ ! ${_buildtype} == 'Release' ]] && [[ ! ${_buildtype} == 'release' ]]; then
@@ -30,22 +30,22 @@ if [[ ! ${_buildtype} == 'Release' ]] && [[ ! ${_buildtype} == 'release' ]]; the
 fi
 
 prepare() {
-  if [[ -e ${srcdir}/${pkgname}-${pkgver}-build ]]; then rm -rf ${srcdir}/${pkgname}-${pkgver}-build; fi
-  mkdir ${srcdir}/${pkgname}-${pkgver}-build
+  if [[ -e ${srcdir}/jreen-${pkgver}-build ]]; then rm -rf ${srcdir}/jreen-${pkgver}-build; fi
+  mkdir ${srcdir}/jreen-${pkgver}-build
 }
 
 build() {
-  cd ${srcdir}/${pkgname}-${pkgver}-build
+  cd ${srcdir}/jreen-${pkgver}-build
 
   cmake -DJREEN_FORCE_QT4=off \
         -DCMAKE_INSTALL_PREFIX=/usr \
         -DCMAKE_BUILD_TYPE=${_buildtype} \
-        ../${pkgname}-${pkgver}
+        ../jreen-${pkgver}
 
   make
 }
 
 package() {
-  cd ${srcdir}/${pkgname}-${pkgver}-build
+  cd ${srcdir}/jreen-${pkgver}-build
   make DESTDIR=${pkgdir} install
 }
