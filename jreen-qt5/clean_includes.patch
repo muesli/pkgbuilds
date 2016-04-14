@@ -1,0 +1,14 @@
+diff --git a/src/stanzaextension.h b/src/stanzaextension.h
+index 525ce24..6be8fd5 100644
+--- a/src/stanzaextension.h
++++ b/src/stanzaextension.h
+@@ -28,7 +28,7 @@
+ 
+ #include <QObject>
+ #include <QSharedPointer>
+-#include <QMetaTypeId>
++// #include <QMetaTypeId>
+ #include "jreen.h"
+ 
+ class QXmlStreamWriter;
+

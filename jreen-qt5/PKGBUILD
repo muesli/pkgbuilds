@@ -22,8 +22,10 @@ license=('GPL2')
 depends=('gsasl' 'speex' 'qt5-base')
 makedepends=('cmake')
 conflicts=('jreen-qt5-git')
-source=("jreen-${pkgver}.zip::http://github.com/euroelessar/jreen/archive/v${pkgver}.zip")
-md5sums=('1ac6d90d17371288bebe3fc1921a977c')
+source=("jreen-${pkgver}.zip::http://github.com/euroelessar/jreen/archive/v${pkgver}.zip"
+        "clean_includes.patch")
+md5sums=('1ac6d90d17371288bebe3fc1921a977c'
+         '45402df0b4fc51ecc59f0ccffe339524')
 
 if [[ ! ${_buildtype} == 'Release' ]] && [[ ! ${_buildtype} == 'release' ]]; then
   options=('debug')
@@ -32,6 +34,9 @@ fi
 prepare() {
   if [[ -e ${srcdir}/jreen-${pkgver}-build ]]; then rm -rf ${srcdir}/jreen-${pkgver}-build; fi
   mkdir ${srcdir}/jreen-${pkgver}-build
+
+  cd ${srcdir}/jreen-${pkgver}
+  patch -Np1 < ../clean_includes.patch
 }
 
 build() {
