@@ -1,5 +1,3 @@
-# Maintainer : Tom Gundersen <teg@jklm.no>
-# Maintainer : Ionut Biru <ibiru@archlinux.org>
 # Maintainer : Christian Muehlhaeuser <muesli@gmail.com>
 
 pkgname=(transmission-qt-git)
