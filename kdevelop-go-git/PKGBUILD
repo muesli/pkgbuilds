@@ -1,0 +1,41 @@
+# Contributor: Christian Muehlhaeuser <muesli@gmail.com>
+
+pkgname=kdevelop-go-git
+pkgver=r115.28b68c0
+pkgrel=1
+pkgdesc="Go language plugin for KDevelop - Git build"
+arch=('i686' 'x86_64')
+url="http://www.kdevelop.org/"
+license=('GPL')
+groups=('kde' 'kdevelop-plugins')
+depends=('kdevplatform>=4.90.90' 'kdevelop>=4.90.90' 'kdevelop-pg-qt')
+makedepends=('cmake' 'git')
+source=('git+https://github.com/KDE/kdev-go.git')
+provides=('kdevelop-go')
+conflicts=('kdevelop-go')
+md5sums=('SKIP')
+
+pkgver() {
+    cd "$srcdir/kdev-go"
+    printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+build() {
+    mkdir -p "$srcdir/kdev-go/build"
+    cd "$srcdir/kdev-go/build"
+
+    cmake ../ \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DLIB_INSTALL_DIR=lib \
+        -DKDE_INSTALL_USE_QT_SYS_PATHS=ON
+
+    make
+}
+
+package() {
+    cd "$srcdir/kdev-go/build"
+
+    make DESTDIR="$pkgdir/" install
+}
+
