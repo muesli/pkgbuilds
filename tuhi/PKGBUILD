@@ -1,14 +1,14 @@
 # Maintainer: Christian Muehlhaeuser <muesli at gmail dot com>
 
 pkgname=tuhi-git
-pkgver=278.9e85b4d
+pkgver=287.f2263e7
 pkgrel=1
 pkgdesc="A DBus daemon to access Wacom SmartPad devices"
 arch=('x86_64')
 url="https://github.com/tuhiproject/tuhi"
 license=('GPL2')
 makedepends=('python' 'python-setuptools')
-depends=('python' 'python-svgwrite')
+depends=('python' 'python-svgwrite' 'python-xdg')
 source=("git+https://github.com/tuhiproject/tuhi.git")
 sha256sums=('SKIP')
 
@@ -19,10 +19,10 @@ pkgver() {
 
 build() {
 	cd "${srcdir}/tuhi"
-    python setup.py build
+	python setup.py build
 }
 
 package() {
 	cd "${srcdir}/tuhi"
-    python setup.py install --root="$pkgdir/" --optimize=1 --skip-build
+	python setup.py install --root="$pkgdir/" --optimize=1 --skip-build
 }
