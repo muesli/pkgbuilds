@@ -1,28 +1,35 @@
+# Maintainer: Jose Riha <jose1711 gmail com>
 # Maintainer: Christian Muehlhaeuser <muesli at gmail dot com>
 
 pkgname=tuhi-git
-pkgver=287.f2263e7
-pkgrel=1
-pkgdesc="A DBus daemon to access Wacom SmartPad devices"
-arch=('x86_64')
+pkgver=20190503
+pkgrel=2
+pkgdesc="DBus daemon to access Wacom SmartPad devices"
+arch=('any')
+depends=('python' 'python-svgwrite' 'python-xdg')
+makedepends=('git' 'python-setuptools')
 url="https://github.com/tuhiproject/tuhi"
 license=('GPL2')
-makedepends=('python' 'python-setuptools')
-depends=('python' 'python-svgwrite' 'python-xdg')
-source=("git+https://github.com/tuhiproject/tuhi.git")
+source=(git+https://github.com/tuhiproject/tuhi)
 sha256sums=('SKIP')
 
 pkgver() {
-	cd "${srcdir}/tuhi"
-	printf "%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+  cd ${pkgname%-git}
+  git log -1 --format="%cd" --date=short | sed "s|-||g"
 }
 
 build() {
-	cd "${srcdir}/tuhi"
-	python setup.py build
+  cd ${pkgname%-git}
+  python setup.py build
 }
 
 package() {
-	cd "${srcdir}/tuhi"
-	python setup.py install --root="$pkgdir/" --optimize=1 --skip-build
+  cd ${pkgname%-git}
+  python setup.py install --root="$pkgdir" --optimize=1 --skip-build
+  install -Dm755 tools/tuhi-live.py "${pkgdir}/usr/bin/tuhi-live.py"
+  install -Dm755 tools/tuhi-kete-sandboxed.py "${pkgdir}/usr/bin/tuhi-kete-sandboxed.py"
+  install -Dm755 tools/parse_log.py "${pkgdir}/usr/bin/parse_log.py"
+  install -Dm755 tools/kete.py "${pkgdir}/usr/bin/kete.py"
+  install -Dm755 tools/tuhi-live.py "${pkgdir}/usr/bin/tuhi-live.py"
+  install -Dm644 README.md "${pkgdir}/usr/share/doc/tuhi/README.md"
 }
