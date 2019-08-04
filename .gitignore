@@ -1,1 +1,6 @@
 *~
+*.tar.*
+*.zip
+.SRCINFO
+pkg/
+src/
